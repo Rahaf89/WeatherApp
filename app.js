@@ -29,7 +29,16 @@ function onSuccess(position) {
       "&appid=" +
       apiKey
   );
-  weatherPromise.then(x => console.log(x.body));
+  weatherPromise.then(res =>
+    res.json().then(json => {
+      console.log(json);
+      console.log(json.weather[0].main);
+      console.log(json.weather[0].name);
+      console.log(parseInt(json.main.temp - 273.15));
+
+      console.log(json.weather[0].icon);
+    })
+  );
 }
 
 function onError(error) {
