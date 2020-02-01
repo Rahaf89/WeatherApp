@@ -9,11 +9,16 @@ let latitude;
 let longitude;
 const notification = document.getElementsByClassName("notification")[0];
 
-getLocation();
 function getLocation() {
+  //console.log(navigator.geolocation);
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  } else {
+    notification.innerHTML = "Geolocation is not supported by this browser.";
   }
+}
+function kelvinToCelsius(temp) {
+  return temp - 273.15;
 }
 
 function onSuccess(position) {
@@ -29,25 +34,41 @@ function onSuccess(position) {
       "&appid=" +
       apiKey
   );
-  weatherPromise.then(res =>
-    res.json().then(json => {
-      console.log(json);
-      console.log(json.weather[0].main);
-      console.log(json.weather[0].name);
-      console.log(parseInt(json.main.temp - 273.15));
+  weather
+    .then((response) => response.json())
+    .then((weather) => {
+      //console.log(weather);
+      //console.log(weather.weather[0].icon);
+      //console.log(parseInt(weather.main.temp - 273.15));
+      //console.log(weather.weather[0].main);
+      //console.log(weather.name);
 
-      console.log(json.weather[0].icon);
-    })
-  );
+      const location = weather.name;
+      const loacationHtmlElement = document.getElementsByClassName("location")[0];
+      loacationHtmlElement.innerHTML = "<p>" + location + "</p>";
+      const temp = kelvinToCelsius(weather.main.temp).toFixed(1);
+      const tempHtmlElement = document.getElementsByClassName("temperature-value")[0];
+      tempHtmlElement.innerHTML = "<p>" + temp + "°<span>C</span></p>";
+      const icon = weather.weather[0].icon;
+      const iconHtmlElement = document.getElementsByClassName("weather-icon")[0];
+      iconHtmlElement.innerHTML = "<img src='icons/" + icon + ".png' alt=''></img>";
+      const weatherDescription = weather.weather[0].main;
+      const weatherDescriptionHtmlElement = document.getElementsByClassName(
+        "temperature-description"
+      )[0];
+      weatherDescriptionHtmlElement.innerHTML = "<p>" + weatherDescription + "</p>";
+    });
 }
+//console.log("info", weather);
+//console.log(position);
+//latitude=position.coords.
 
 function onError(error) {
-  console.error("No no no", error);
-
+  console.error(error);
+  //notification[0].innerHTML = error.message;
   const p = document.createElement("p");
   p.innerHTML = error.message;
   notification.style.display = "block";
   notification.appendChild(p);
 }
-
 getLocation();
