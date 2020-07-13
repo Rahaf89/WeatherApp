@@ -5,9 +5,21 @@
     <title>Weather App - JavaScript</title>
     <link rel="stylesheet" href="font/Rimouski.css">
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
 </head>
 <body>
-    
+    <link
+rel="stylesheet"
+href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+type="text/css"
+/>
+    <div>
+    <input type="text" placeholder="search" id="userCity" ></input>
+    <button type="submit" id = "get">Search</button>
+</div>
+<br>
     <div class="container">
         <div class="app-title">
             <p>Weather</p>
@@ -15,7 +27,7 @@
         <div class="notification"> </div>
         <div class="weather-container">
             <div class="weather-icon">
-                <img src="icons/unknown.png" alt="">
+                <img src="icons/" alt="weather icon">
             </div>
             <div class="temperature-value">
                 <p>- °<span>C</span></p>
@@ -28,8 +40,47 @@
             </div>
         </div>
     </div>
+    <br>
+    <section id="mapSection">
+    <div id="map"></div>
+</section>
+   <div>
+       <h2>Weather in my favorite cities:</h2>
+   </div>
+    <div id = "favCities"class = "favCities">
     
+</div>
+
     <script src="app.js"></script>
+       <script> mapboxgl.accessToken = 'pk.eyJ1Ijoia3Jpc3RpaW5hcCIsImEiOiJja2IwanFpeXcwOG81MnlxajZ1anNuNWF2In0.9ezdeBkpia-BiiZHrALb5A';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [2.1734,41.3851],
+zoom: 5
+});
+ 
+var marker = new mapboxgl.Marker()
+.setLngLat([0.127800, 51.507400])
+
+.addTo(map);
+var marker1 = new mapboxgl.Marker()
+.setLngLat([2.1734,41.3851])
+
+.addTo(map);
+
+var marker2 = new mapboxgl.Marker()
+.setLngLat([24.7536,59.4370])
+
+.addTo(map);
+
+var marker3 = new mapboxgl.Marker()
+.setLngLat([139.6503,35.6762])
+
+.addTo(map);
+    </script>
+  
+    
 </body>
 </html>
 
